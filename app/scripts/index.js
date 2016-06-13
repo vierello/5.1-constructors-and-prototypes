@@ -74,18 +74,89 @@ console.log(kepler); //will see "{likes:'people', chases: 'balls'}"
 //
 //            kay.sayHello();
 
-function sayHello(){
-  console.log('regular', this);
+          function sayHello(){
+            console.log('regular', this);
+          }
+          sayHello();
+
+          var kay = {
+            name: 'Kay',
+            sayHello: function(){
+              console.log('regular1', this);
+              console.log(this.name);
+              return "Woof";
+            }
+          };
+
+          kay.sayHello();
+
+          console.log('method hasOwnProperty', kay.hasOwnProperty('name'));
+
+//  3. as a constructor (new);
+
+          function Dog(thing){  //when you want to use a function as a constructor
+                                //always name it starting with a capital letter
+                                //instead of in camelcase.
+            console.log('constructor. this', this);
+
+            this.height = 'short';
+
+            this.wag = function(thing){
+              console.log("wag ", thing);
+            }
+            //console.log("wag ", thing);
+          }
+
+          var oliver = new Dog(); //creates a new object called dog that is assigned to the variable oliver
+          var kepler = new Dog(); //creates a new object called dog that is assigned to the variable kepler
+
+          oliver.wag('tail');
+          kepler.wag('ears');
+
+          kepler.length = 'long';
+
+          console.log('kepler', kepler);
+          console.log('oliver', oliver);
+
+          function Fruit(){
+
+          }
+
+          var fruit = new Fruit();
+
+// 4.
+
+
+
+
+//Inheritance
+
+function Truck(){
+  this.doors = 2;
+  this.bed = true;
 }
-sayHello();
 
-var kay = {
-  name: 'Kay',
-  sayHello: function(){
-    console.log('regular1', this);
-    console.log(this.name);
-    return "Woof";
-  }
-};
+Truck.prototype.go = function(){  //accesses the function Truck and adds the
+                                  //method go and adds it to Trucks prototype
+  console.log('vroom');
+}
 
-kay.sayHello();
+var genericTruck = new Truck();
+console.log(genericTruck);
+genericTruck.go();
+
+
+
+function Dodge(){
+  this.engine = 'hemi';
+  this.ram = true;
+}
+
+Dodge.prototype = new Truck(); //adds the new Truck constructor to the prototype
+                               //of Dodge
+
+
+var dakota = new Dodge();
+
+console.log(dakota.doors);
+dakota.go();
